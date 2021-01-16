@@ -1,0 +1,22 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: Wisent API
+            description: API for Wisent Bar
+            version: 1.0.0
+        tags:
+            - name: "Menu"
+              description: "Restaurant menu"
+            - name: 'Reservations'
+              description: 'Reservations endpoints for customers'
+            - name: "Manage categories"
+              description: "Manage dishes categories"
+            - name: "Manage subcategories"
+              description: "Manage dishes subcategories"
+            - name: "Manage dishes"
+              description: "Manage dishes"
+            - name: "Upload"
+              description: "Upload pictures"
+    areas:
+        path_patterns:
+            - /v1(?!/doc$)

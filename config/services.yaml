@@ -4,7 +4,13 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-
+    customer_get_cache_valid_time_min: 60
+    currencies_cache_valid_time_hours: 8
+    company_postal_code: 81-063
+    upload_max_size_mb: 5
+    uploads_dir: '%kernel.project_dir%/uploads'
+    currency_api_url: 'https://api.exchangeratesapi.io/latest?base=PLN'
+    max_seats_to_reserve: 30
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -26,6 +32,71 @@ services:
     App\Controller\:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
+
+    App\DataWarehouse\:
+        resource: '../src/DataWarehouse/'
+        public: true
+        autowire: true
+
+    App\Service\:
+        resource: '../src/Service/'
+        public: true
+        autowire: true
+
+    App\Extension\QueryStringParamsConverter:
+        tags:
+            - { name: request.param_converter, converter: in_query }
+
+    app.data.warehouse.category:
+        class: App\DataWarehouse\CategoryDataWarehouse
+        public: true
+        autowire: true
+        tags: [ 'data.warehouse' ]
+
+    app.data.warehouse.subcategory:
+        class: App\DataWarehouse\SubcategoryDataWarehouse
+        public: true
+        autowire: true
+        tags: [ 'data.warehouse' ]
+
+    app.data.warehouse.dish:
+        class: App\DataWarehouse\DishDataWarehouse
+        public: true
+        autowire: true
+        tags: [ 'data.warehouse' ]
+
+    App\EventListener\MenuRequestListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
+
+    App\EventListener\ManageCategoriesRequestListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
+
+    App\EventListener\ManageSubcategoriesRequestListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
+
+    App\EventListener\ManageDishesRequestListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
+
+    App\EventListener\UploadRequestListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
+
+    App\EventListener\ContactListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
+
+    App\EventListener\ExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }
+
+    App\DataFactory\:
+        resource: '../src/DataFactory/'
+        public: true
+        autowire: true
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

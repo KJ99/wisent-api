@@ -1,0 +1,19 @@
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyDe9mq-TQXvUJzuGr3hnY6XG6vJKUqkfKQ",
+    authDomain: "wisent-api.firebaseapp.com",
+    projectId: "wisent-api",
+    storageBucket: "wisent-api.appspot.com",
+    messagingSenderId: "259398052836",
+    appId: "1:259398052836:web:649da9d15d218a4a15b5f1"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
