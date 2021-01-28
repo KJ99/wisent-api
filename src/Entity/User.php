@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -34,6 +35,26 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $username;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Picture::class)
+     */
+    private $picture;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $verified = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $active = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -58,7 +79,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return $this->username;
     }
 
     /**
@@ -115,4 +136,53 @@ class User implements UserInterface
     public function isAdmin(): bool {
         return in_array('ROLE_ADMIN', $this->roles);
     }
+
+
+    public function isModerator(): bool {
+        return in_array('ROLE_MODERATOR', $this->roles);
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    public function getPicture(): ?Picture
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?Picture $picture): self
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function getVerified(): ?bool
+    {
+        return $this->verified;
+    }
+
+    public function setVerified(bool $verified): self
+    {
+        $this->verified = $verified;
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
 }

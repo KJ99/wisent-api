@@ -31,7 +31,6 @@ class ManageCategoriesController extends AbstractFOSRestController {
      * )
      */
     public function getList(Request $request, CategoryDataWarehouse $warehouse, CategorySearchViewModel $params) {
-        dump($request->getHost(), $request->getHttpHost());exit;
         return $this->json($warehouse->get(), 200);
     }
 

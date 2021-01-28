@@ -9,15 +9,37 @@ security:
         app_user_provider:
             entity:
                 class: App\Entity\User
-                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        login:
+            pattern:  ^/v1/auth
+            stateless: true
+            anonymous: true
+            json_login:
+                check_path:               /v1/auth/login
+                success_handler:          lexik_jwt_authentication.handler.authentication_success
+                failure_handler:          lexik_jwt_authentication.handler.authentication_failure
+
+        manage:
+            pattern: ^/v1/manage
+            anonymous: false
+            lazy: true
+            provider: app_user_provider
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+
         main:
             anonymous: true
             lazy: true
             provider: app_user_provider
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -28,5 +50,5 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/v1/manage, roles: ROLE_MODERATOR }
         # - { path: ^/profile, roles: ROLE_USER }

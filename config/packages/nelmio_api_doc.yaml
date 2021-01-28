@@ -17,6 +17,17 @@ nelmio_api_doc:
               description: "Manage dishes"
             - name: "Upload"
               description: "Upload pictures"
+        components:
+          securitySchemes:
+            BearerAuthenticator:
+              type: http
+              scheme: bearer
+              bearerFormat: JWT
+              description: 'Authorization: Bearer {jwt}'
+              name: Authorization
+              in: header
+        security:
+          - BearerAuthenticator: []
     areas:
         path_patterns:
             - /v1(?!/doc$)

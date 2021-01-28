@@ -10,6 +10,13 @@ use App\Entity\Reservation;
 class ReservationResponseViewModel
 {
     /**
+     * @var int
+     * @JMS\Type(name="integer")
+     * @OA\Property(description="ID of the category", schema=@OA\Schema(type="integer"))
+     */
+    private int $id;
+
+    /**
      * @var string
      * @JMS\Type("string")
      */
@@ -19,7 +26,7 @@ class ReservationResponseViewModel
      * @var string
      * @JMS\Type("string")
      */
-    private string $date;
+    private string $dateOfReservation = '';
 
     /**
      * @var integer
@@ -48,7 +55,7 @@ class ReservationResponseViewModel
      */
     public function getDate(): string
     {
-        return $this->date;
+        return $this->dateOfReservation;
     }
 
     /**
@@ -56,7 +63,7 @@ class ReservationResponseViewModel
      */
     public function setDate(string $date): void
     {
-        $this->date = $date;
+        $this->dateOfReservation = $date;
     }
 
     /**
