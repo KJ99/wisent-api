@@ -28,6 +28,9 @@ class FileService
     private int $maxFileSize;
     private string $uploadsDir;
 
+    private string $defaultAvatarDir;
+    private string $defaultAvatarName;
+
 
     public function __construct(EntityManagerInterface $em, ParameterBagInterface $params, LoggerInterface $logger) {
         $this->em = $em;
@@ -35,6 +38,8 @@ class FileService
         $this->maxFileSize = $params->get('upload_max_size_mb') * 1024 * 1024;
         $this->uploadsDir = $params->get('uploads_dir');
         $this->logger = $logger;
+        $this->defaultAvatarDir = $params->get('default_avatar_dir');
+        $this->defaultAvatarName = $params->get('default_avatar_name');
     }
 
     public function validateFile(?UploadedFile $file): ?ApiException {
@@ -47,6 +52,14 @@ class FileService
             $error = new ApiException('File is too large', 102, 400);
         }
         return $error;
+    }
+
+    public function getDefaultUserAvatar(): Picture {
+        $picture = new Picture();
+        $picture->setDirectory($this->defaultAvatarDir);
+        $picture->setFileName($this->defaultAvatarName);
+        $picture->setMime('image/png');
+        return $picture;
     }
 
     public function resolveFile(UploadedFile $file): Result {

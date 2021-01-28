@@ -1,0 +1,10 @@
+lexik_jwt_authentication:
+    secret_key: '%kernel.project_dir%/jwt/private.pem'
+    public_key: '%kernel.project_dir%/jwt/public.pem'
+    pass_phrase: 'qwe123'
+    token_ttl: 3600
+    token_extractors:
+        authorization_header:      # look for a token as Authorization Header
+            enabled: true
+            prefix:  Bearer
+            name:    Authorization

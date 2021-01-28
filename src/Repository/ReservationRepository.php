@@ -35,6 +35,15 @@ class ReservationRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
+    public function findFuture() {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.dateOfReservation > :now')
+            ->setParameter('now', new \DateTime('now'))
+            ->orderBy('r.dateOfReservation', 'asc')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Reservation[] Returns an array of Reservation objects
     //  */

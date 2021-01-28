@@ -30,6 +30,8 @@ class UploadRequestListener extends EventListener
     {
         $this->logger->info('I will handle that request! My name is ' . self::class);
         $request = $event->getRequest();
+        $this->logger->info(json_encode($request->files->count()));
+        $this->logger->info(json_encode($request->request->keys()));
         if($request->getMethod() == 'POST') {
             $file = $request->files->get('file');
             $error = $this->fileService->validateFile($file);

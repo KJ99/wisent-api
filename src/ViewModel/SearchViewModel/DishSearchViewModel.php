@@ -23,7 +23,7 @@ class DishSearchViewModel extends SearchViewModel {
      * @OA\Property(property="visible", type="boolean", example=true, required="false")
      *
      */
-    private $visible;
+    private $visible = true;
 
     /**
      * @var int
@@ -41,10 +41,9 @@ class DishSearchViewModel extends SearchViewModel {
      */
     private bool $multiCurrency = false;
     /**
-     * @var ArrayCollection
      * @JMS\Type(name="string")
      */
-    private string $currencies;
+    private string $currencies = '';
 
     public function __construct()
     {

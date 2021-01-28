@@ -41,7 +41,6 @@ abstract class DataFactory {
             $result->setViewModel($response);
             $result->setHttpCode(201);
         } catch (\Exception $e) {
-            dump($e);exit;
             $this->em->rollback();
             $result = $this->createErrorResult($e);
         }
